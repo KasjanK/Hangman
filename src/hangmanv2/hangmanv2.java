@@ -31,48 +31,54 @@ public class hangmanv2 {
 		while (guesses > 0) {
 			System.out.println("Guesses: " + guesses);
 
-			System.out.println("Your guess: ");
-
-			String guess = scanner.nextLine().toLowerCase();
-
-			// takes only the first letter if the user types a word
-			char letter = guess.charAt(0);
-
 			boolean isGuessCorrect = false;
-
-			// checks if the letter in any "randomWord" are equal to the one the user entered
-
-			for (int i = 0; i < randomWord.length(); i++) {
-				char l = randomWord.charAt(i);
-
-				// if the guess is correct, print the correct letter
-				if (l == letter) {
-					letters[i] = l;
-					isGuessCorrect = true;
-				}
-			}
-
+			
+			System.out.println();
 			System.out.print("Word: ");
-
-			// prints "_" instead of the letters of the word, that the player haven't guessed
- 
+			
+			// shows the word to guess
 			for (int i = 0; i < letters.length; i++) {
 				System.out.print(letters[i] + " ");
 			}
 
+			// the menu
 			System.out.println();
-
-			if (!isGuessCorrect) {
-				guesses--;
-				hangmanImage();
+			System.out.println();
+			System.out.println("Menu");
+			System.out.println("Type '1' to guess a letter");
+			System.out.println("Type '2' to guess the whole word");
+			String guess = scanner.nextLine().toLowerCase();
+			System.out.println();
+			
+			if ("1".equals(guess)) {
+				System.out.println("Guess with 1 letter");
+				guess = scanner.nextLine().toLowerCase();
+				char letter = guess.charAt(0);
+				for (int i = 0; i < randomWord.length(); i++) {
+					char l = randomWord.charAt(i);
+					if (l == letter) {
+						letters[i] = l;
+						isGuessCorrect = true;
+					}
+				}
+				
+				if (!isGuessCorrect) {
+					guesses--;
+					hangmanImage();
+				}
 			}
-
-			if (randomWord.equals(guess)) {
-				System.out.println();
-				System.out.println("Your guess was right! The word was: " + randomWord);
-				break;
+			
+			if ("2".equals(guess)) {
+				System.out.println("Guess the word:");
+				guess = scanner.nextLine().toLowerCase();
+				if (randomWord.equals(guess)) {
+					System.out.println();
+					System.out.println("Your guess was right! The word was: " + randomWord);
+					break;
+				}
+				guesses = guesses - 1;
+				
 			}
-
 		}
 	}
 
